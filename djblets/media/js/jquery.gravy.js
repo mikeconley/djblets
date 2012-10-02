@@ -24,6 +24,7 @@ $.fn.old_html = $.fn.html;
  * So our new version of html() wraps it and then removes that inner <pre>
  * tag.
  */
+
 $.fn.html = function(value) {
     var removePre = false;
 
@@ -33,7 +34,7 @@ $.fn.html = function(value) {
         removePre = true;
     }
 
-    var ret = this.old_html(value);
+    var ret = this.old_html.apply(this, value ? [value] : []);
 
     if (removePre) {
         var preTag = this.children();
