@@ -295,11 +295,22 @@ $.extend($.ui.autoSizeTextArea, {
 
 
 $.widget("ui.inlineEditor", {
-    _init: function() {
-        if ($.data(this.element[0], "inlineEditor")) {
-            return;
-        }
+    options: {
+        cls: "",
+        extraHeight: 100,
+        forceOpen: false,
+        formatResult: null,
+        multiline: false,
+        notifyUnchangedCompletion: false,
+        promptOnCancel: true,
+        showButtons: true,
+        showEditIcon: true,
+        startOpen: false,
+        stripTags: false,
+        useEditIconOnly: false
+    },
 
+    _create: function() {
         /* Constants */
         var self = this;
 
@@ -307,6 +318,7 @@ $.widget("ui.inlineEditor", {
         this._initialValue = null;
         this._editing = false;
         this._dirty = false
+
 
         /* Elements */
         this._form = $("<form/>")
@@ -323,6 +335,7 @@ $.widget("ui.inlineEditor", {
             this._field = $('<input type="text"/>')
                 .appendTo(this._form);
         }
+
 
         this._field
             .keydown(function(e) {
@@ -663,23 +676,6 @@ $.widget("ui.inlineEditor", {
 });
 
 $.ui.inlineEditor.getter = "dirty field value";
-
-$.extend($.ui.inlineEditor, {
-    defaults: {
-        cls: "",
-        extraHeight: 100,
-        forceOpen: false,
-        formatResult: null,
-        multiline: false,
-        notifyUnchangedCompletion: false,
-        promptOnCancel: true,
-        showButtons: true,
-        showEditIcon: true,
-        startOpen: false,
-        stripTags: false,
-        useEditIconOnly: false
-    }
-});
 
 /* Allows quickly looking for dirty inline editors. Those dirty things. */
 $.expr[':'].inlineEditorDirty = function(a) {
